@@ -3,12 +3,12 @@ From: ubuntu:18.04
 Stage: build
 
 %setup
-    mkdir ${SINGULARITY_ROOTFS}/input
-    mkdir ${SINGULARITY_ROOTFS}/output
-    mkdir ${SINGULARITY_ROOTFS}/scripts
+    mkdir ${SINGULARITY_ROOTFS}/inputdata
+    mkdir ${SINGULARITY_ROOTFS}/result
+    mkdir ${SINGULARITY_ROOTFS}/reference
     
 %files
-    /restricted/projectnb/casa/mtLin/singularityTest/conda_env_old.yml /
+    ./conda_env_old.yml /
 
 %environment
     export LISTEN_PORT=12345
@@ -65,7 +65,7 @@ Stage: build
 %labels
     Name circlexplore3_container
     Author minty@bu.edu
-    Version v0.0.1
+    Version v0.0.2
 
 %help
     This is a demo container used to illustrate a def file that uses all
