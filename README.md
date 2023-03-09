@@ -57,6 +57,13 @@ Of course, if you are using BU SCC and have the access to casa, you can use the 
 singularity run --bind ./inputdata:/inputdata,./result:/result,/restricted/projectnb/casa/mtLin/reference:/reference cir3.sif example
 ```
 
+## Run container on PBS
+A very basic demo of qsub file is provided, named runCIR3.qsub
+You can run it with bash
+```bash
+qsub runCIR3.qsub <name>
+```
+please remember delete /hisat/align.sam and /inputdata/${name}_R1.fastq files, since they are quite large.
 
 ## Run container in SHELL mode(for developer)
 It is used for debugging and debuging only. You can get into the container and check the environment in this way.
