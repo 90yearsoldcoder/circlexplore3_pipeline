@@ -1,6 +1,7 @@
 #!/bin/bash -l
 #$ -P   casa
 #$ -cwd 
+#$ -m beasn -M minty@bu.edu -pe omp 16
 
 #run for test: qsub runCIR3.qsub 1004-minus_174_019_S63_L002
 name=${1}
