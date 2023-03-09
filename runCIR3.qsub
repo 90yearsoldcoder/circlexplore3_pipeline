@@ -1,7 +1,7 @@
 #!/bin/bash -l
 #$ -P   casa
 #$ -cwd 
-#$ -m beasn -M minty@bu.edu -pe omp 16
+#$ -pe omp 16
 
 #run for test: qsub runCIR3.qsub 1004-minus_174_019_S63_L002
 name=${1}
@@ -11,5 +11,5 @@ singularity run --no-home --bind ./inputdata:/inputdata,./result:/result,/restri
 echo "exit Container"
 
 # remove files 
-# rm -rf ./result/${name}/hisat/align.sam 
-# rm -rf ./inputdata/${name}_R1.fastq ./inputdata/${name}_R2.fastq
+rm -rf ./result/${name}/hisat/align.sam 
+rm -rf ./inputdata/${name}_R1.fastq ./inputdata/${name}_R2.fastq
