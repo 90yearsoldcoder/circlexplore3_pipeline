@@ -14,6 +14,7 @@ cd /path/to/folder
 Build the container using fakeroot mode
 ```bash
 git clone git@github.com:90yearsoldcoder/circlexplore3_pipeline.git
+cd circlexplore3_pipeline
 singularity build --fakeroot cir3.sif cir3_container.def
 ```
 
@@ -26,13 +27,13 @@ mkdir inputdata result reference
 ```
 
 ## Move files to the inputdata folder and reference
-The postion of inputdata file
+The folder structure of inputdata files
 ```
 ./inputdata/${name}_R1.fastq
 ./inputdata/${name}_R2.fastq
 ```
 
-The position of reference
+The folder structure of reference
 ```
 ./reference/hg38.fa 
 ./reference/hisat_index/hisat_index 
@@ -45,8 +46,20 @@ For BU SCC user, you can find those reference at
 /restricted/projectnb/casa/mtLin/reference
 ```
 
+## Run container
+To perform circlexplore3 for fastq file example_R1.fastq and example_R2.fastq
+```bash
+singularity run --bind ./inputdata:/inputdata,./result:/result,./reference:/reference cir3.sif example
+```
+
+Of course, if you are using BU SCC and have the access to casa, you can use the following command
+```bash
+singularity run --bind ./inputdata:/inputdata,./result:/result,/restricted/projectnb/casa/mtLin/reference:/reference cir3.sif example
+```
+
+
 ## Run container in SHELL mode(for developer)
-It is used for debugging and debuging only. You can get into the container and check the environment by this way.
+It is used for debugging and debuging only. You can get into the container and check the environment in this way.
 ```bash
 singularity shell --no-home --bind ./inputdata:/inputdata,./result:/result,/restricted/projectnb/casa/mtLin/reference:/reference cir3.sif
 source activate circexplorer3
