@@ -25,13 +25,17 @@ Stage: build
     rm Miniconda3-latest-Linux-x86_64.sh
     
     # pull the conda functions in . /miniconda3/etc/profile.d/conda.sh and make pip, etc. available while in %post
-    export PATH="/miniconda3/bin:$PATH"
+    export PATH="/miniconda3/bin:$PATH" >> $SINGULARITY_ENVIRONMENT
     
     # Use conda to install pip, numpy and other dependencies
     conda env create -f conda_env_old.yml
     
     # Help conda resolving Python "import" 
     # conda update --all
+    
+    # make sure the conda env is activated whenever I use the container
+    echo ". /miniconda3/etc/profile.d/conda.sh" >> $SINGULARITY_ENVIRONMENT
+    echo "conda activate circexplorer3" >> $SINGULARITY_ENVIRONMENT
     
     # install Circlexplore3
     git clone https://github.com/YangLab/CLEAR
@@ -44,13 +48,34 @@ Stage: build
 %runscript
     echo "Container was created $NOW"
     echo "Arguments received: $*"
-    exec echo "$@"
+    echo "Inputdata Name: ${1}"
+    
+    # check conda environment
+    conda env list
+    
+    # activate conda environment
+    # source activate circexplorer3
+    # echo "Conda environment ready"
+    
+    # run circlexplorer3
+    echo "Performing circlexplorer3 on ${1}"
+    clear_quant -1 /inputdata/${1}_R1.fastq \
+            -2 /inputdata/${1}_R2.fastq \
+            -g /reference/hg38.fa \
+            -i /reference/hisat_index/hisat_index \
+            -j /reference/bowtieIndex/bowtie1_index \
+            -G /reference/hg38_ref_all2.gtf\
+            -o /result/${1}
+            -p 16
+    echo "Circlexplore3 for ${1} finished"
+    
+    exec echo "In container, no executable APP"
 
 %startscript
     nc -lp $LISTEN_PORT
 
 %test
-    ls
+    echo "Starting test section"
     grep -q NAME=\"Ubuntu\" /etc/os-release
     if [ $? -eq 0 ]; then
         echo "Container base is Ubuntu as expected."
@@ -61,11 +86,13 @@ Stage: build
     
     # check the conda env
     conda env list
+    echo "Test done"
 
 %labels
     Name circlexplore3_container
     Author minty@bu.edu
-    Version v0.0.2
+    Version v0.1.0
+    DATE Mar/08/2023
 
 %help
     This is a demo container used to illustrate a def file that uses all
