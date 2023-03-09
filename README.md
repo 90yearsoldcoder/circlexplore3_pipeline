@@ -71,3 +71,27 @@ It is used for debugging and debuging only. You can get into the container and c
 singularity shell --no-home --bind ./inputdata:/inputdata,./result:/result,/restricted/projectnb/casa/mtLin/reference:/reference cir3.sif
 source activate circexplorer3
 ```
+
+## An kind reminder(for developer)
+It is an reminder for anyone who wants to develop the container.
+In the definition file
+```
+%enviroment
+    export balabala
+```
+this part works and ONLY works in SHELL mode.
+As a result, ```%runscript``` will not share the environment setting.
+
+Why it is so important?
+if you write down "source activate <env>" in ```%runscript```, it goes wrong even though you have already export the conda/bin as a path.
+You cannot activate the conda env by this way.
+The interesting thing is you can activate the conda environment in SHELL mode of the container.
+
+How to avoid this problem when cannot use SHELL mode?
+You can write the environment setting in ```%post``` part.
+Something like this
+```
+%post
+echo ". /miniconda3/etc/profile.d/conda.sh" >> $SINGULARITY_ENVIRONMENT
+echo "conda activate circexplorer3" >> $SINGULARITY_ENVIRONMENT
+```
