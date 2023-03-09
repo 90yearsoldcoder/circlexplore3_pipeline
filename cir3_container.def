@@ -95,5 +95,22 @@ Stage: build
     DATE Mar/08/2023
 
 %help
-    This is a demo container used to illustrate a def file that uses all
-    supported sections.
+    This is a container for circlexplorer3
+    Preparation:
+        You should prepare 3 folder as mount: inputdata, result, reference
+        inputdata folder: containing inputdata. each sample is named as <name>_R1.fastq and <name>_R2.fastq
+        result: nothing special, empty or not
+        reference: containing /reference/hg38.fa /reference/hisat_index/hisat_index /reference/bowtieIndex/bowtie1_index /reference/hg38_ref_all2.gtf
+    
+    Run:
+        singularity run --bind ./inputdata:/inputdata,./result:/result,./reference:/reference cir3.sif <name>
+    
+    Output:
+        In Result folder
+        
+    github of definition file:
+        https://github.com/90yearsoldcoder/circlexplore3_pipeline
+    
+    Singularity library:
+        library://mint/circlexplore3_pipeline/cir3:v0.1.0
+    
