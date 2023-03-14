@@ -1,15 +1,25 @@
 #!/bin/bash -l
 #$ -P   casa
+#$ -l h_rt=60:00:00
+#$ -N cir3_tasks
 #$ -cwd 
 #$ -pe omp 16
+#$ -tc 10
 
 #run for test: qsub runCIR3.qsub 1000
 name=${1}
+
+#gunzip file
+echo "gunzip ${name}_1.fastq.gz"
+gunzip -c ./inputdata/${name}_1.fastq.gz > ./inputdata/${name}_R1.fastq
+echo "gunzip ${name}_2.fastq.gz"
+gunzip -c ./inputdata/${name}_2.fastq.gz > ./inputdata/${name}_R2.fastq
 
 echo "Calling container"
 singularity run --no-home --bind ./inputdata:/inputdata,./result:/result,/restricted/projectnb/casa/mtLin/reference:/reference cir3.sif ${name}
 echo "exit Container"
 
 # remove files 
+echo "removing cache"
 rm -rf ./result/${name}/hisat/align.sam 
 rm -rf ./inputdata/${name}_R1.fastq ./inputdata/${name}_R2.fastq
