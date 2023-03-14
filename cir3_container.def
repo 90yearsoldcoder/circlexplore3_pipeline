@@ -64,8 +64,8 @@ Stage: build
             -g /reference/hg38.fa \
             -i /reference/hisat_index/hisat_index \
             -j /reference/bowtieIndex/bowtie1_index \
-            -G /reference/hg38_ref_all2.gtf\
-            -o /result/${1}
+            -G /reference/hg38_ref_all2.gtf \
+            -o /result/${1} \
             -p 16
     echo "Circlexplore3 for ${1} finished"
     

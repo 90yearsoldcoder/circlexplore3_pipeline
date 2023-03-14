@@ -3,7 +3,7 @@
 #$ -cwd 
 #$ -pe omp 16
 
-#run for test: qsub runCIR3.qsub 1004-minus_174_019_S63_L002
+#run for test: qsub runCIR3.qsub 1000
 name=${1}
 
 echo "Calling container"
