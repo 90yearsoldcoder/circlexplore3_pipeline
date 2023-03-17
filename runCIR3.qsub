@@ -6,8 +6,9 @@
 #$ -pe omp 16
 #$ -tc 10
 
-#run for test: qsub runCIR3.qsub 1000
-name=${1}
+#run for test: qsub runCIR3.qsub 1000 inputdata/path/
+name=$(sed -n ${SGE_TASK_ID}p $1)
+inputdata=${2}
 
 #gunzip file
 echo "gunzip ${name}_1.fastq.gz"
@@ -16,7 +17,7 @@ echo "gunzip ${name}_2.fastq.gz"
 gunzip -c ./inputdata/${name}_2.fastq.gz > ./inputdata/${name}_R2.fastq
 
 echo "Calling container"
-singularity run --no-home --bind ./inputdata:/inputdata,./result:/result,/restricted/projectnb/casa/mtLin/reference:/reference cir3.sif ${name}
+singularity run --no-home --bind ${inputdata}:/inputdata,./result:/result,/restricted/projectnb/casa/mtLin/reference:/reference cir3.sif ${name}
 echo "exit Container"
 
 # remove files 

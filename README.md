@@ -65,6 +65,19 @@ qsub runCIR3.qsub <name>
 ```
 please remember delete /hisat/align.sam and /inputdata/${name}_R1.fastq files, since they are quite large.
 
+## Run container batch by batch and automatically
+switch to other branch of the repo
+```
+git clone -b tcbatch git@github.com:90yearsoldcoder/circlexplore3_pipeline.git
+```
+or
+copy the start.sh file and runCIR3.qsub from my demo(/restricted/projectnb/casa/mtLin/circexplore3/circlexplore3_pipeline/) *on branch tcbatch
+
+Then, run the container
+```
+bash start.sh sample_list.txt path/to/inputdata
+```
+
 ## Run container in SHELL mode(for developer)
 It is used for debugging and debuging only. You can get into the container and check the environment in this way.
 ```bash
