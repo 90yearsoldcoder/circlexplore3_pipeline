@@ -109,7 +109,7 @@ echo ". /miniconda3/etc/profile.d/conda.sh" >> $SINGULARITY_ENVIRONMENT
 echo "conda activate circexplorer3" >> $SINGULARITY_ENVIRONMENT
 ```
 
-# 4.(temporary pipeline) For emergency use
+# 4.(temporary pipeline) For emergent use
 Since our current pipeline cannot handle flexible reference, here we provide a temporary way to use Alex's new annotation
 ## 4.1 copy files to working folder
 ```
