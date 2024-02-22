@@ -1,0 +1,4 @@
+#!/bin/bash -l
+#$ -P casa -pe omp 1 -cwd -o log.o -e log.e
+
+python monitor.py -m 600
