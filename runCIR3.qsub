@@ -3,21 +3,21 @@
 #$ -l h_rt=60:00:00
 #$ -N cir3_tasks
 #$ -cwd 
-#$ -pe omp 16
-#$ -tc 10
+#$ -pe smp 16
+#$ -tc 30
 
 #run for test: qsub runCIR3.qsub 1000 inputdata/path/
 name=$(sed -n ${SGE_TASK_ID}p $1)
-inputdata=${2}
+inputdata_path=${2}
 
 #gunzip file
 echo "gunzip ${name}_1.fastq.gz"
-gunzip -c ./inputdata/${name}_1.fastq.gz > ./inputdata/${name}_R1.fastq
+gunzip -c $inputdata_path/${name}_1.fastq.gz > ./inputdata/${name}_R1.fastq
 echo "gunzip ${name}_2.fastq.gz"
-gunzip -c ./inputdata/${name}_2.fastq.gz > ./inputdata/${name}_R2.fastq
+gunzip -c $inputdata_path/${name}_2.fastq.gz > ./inputdata/${name}_R2.fastq
 
 echo "Calling container"
-singularity run --no-home --bind ${inputdata}:/inputdata,./result:/result,/restricted/projectnb/casa/mtLin/reference:/reference cir3.sif ${name}
+singularity run --no-home --bind ./inputdata:/inputdata,./result:/result,/restricted/projectnb/casa/mtLin/reference/pseudo_reference:/reference cir3.sif ${name}
 echo "exit Container"
 
 # remove files 
