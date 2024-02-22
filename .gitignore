@@ -6,4 +6,5 @@ runCIR3.qsub.e*
 runCIR3.qsub.o*
 runCIR3.qsub.pe*
 runCIR3.qsub.po*
+cir3_tasks.*
 
